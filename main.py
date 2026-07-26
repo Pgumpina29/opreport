@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException, Form, Request
 from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse, StreamingResponse
 import csv
 from io import StringIO, BytesIO
-from openpyxl import Workbook
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text
@@ -912,6 +911,8 @@ async def delete_record(record_id: int):
 
 @app.get("/export")
 async def export_excel(request: Request, division: Optional[str] = None):
+    from openpyxl import Workbook
+
     auth_check = check_auth(request)
     if auth_check:
         return auth_check
