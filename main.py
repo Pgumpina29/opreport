@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Form, Request
 from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse, StreamingResponse
 import csv
-from io import StringIO, BytesIO
+from io import StringIO
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text
@@ -930,27 +930,22 @@ async def export_excel(request: Request, division: Optional[str] = None):
         if division and is_admin:
             records = [r for r in records if r.division == division]
 
-        wb = Workbook()
-        ws = wb.active
-        ws.title = "Section Cases"
+        output = StringIO()
+        writer = csv.writer(output)
 
         headers = ['ID', 'S.No', 'Date', 'Time', 'Division', 'Section', 'Train No', 'Incident Type', 'LP Name', 'Incident Details']
-        ws.append(headers)
+        writer.writerow(headers)
 
         for record in records:
-            ws.append([
+            writer.writerow([
                 record.id, record.sno, record.date, record.incident_time, record.division,
                 record.section, record.train_no, record.incident_type, record.lp_name, record.incident_details
             ])
 
-        output = BytesIO()
-        wb.save(output)
-        output.seek(0)
-
         return StreamingResponse(
             iter([output.getvalue()]),
-            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            headers={"Content-Disposition": "attachment; filename=usf_reports.xlsx"}
+            media_type="text/csv",
+            headers={"Content-Disposition": "attachment; filename=usf_reports.csv"}
         )
     finally:
         db.close()
