@@ -185,6 +185,8 @@ async def authenticate(username: str = Form(...), password: str = Form(...)):
         "guntakal": ("guntakal123", "Guntakal"),
         "vijayawada": ("vijayawada123", "Vijayawada"),
         "visakhapatnam": ("visakhapatnam123", "Visakhapatnam"),
+        "gnt": ("gnt123", "Guntur"),
+        "gtl": ("gtl123", "Guntakal"),
         "bza": ("bza123", "Vijayawada"),
         "vskp": ("vskp123", "Visakhapatnam")
     }
