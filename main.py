@@ -731,7 +731,8 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
     .fvalue{{ color:#000; font-size:9pt; }}
     .sig-block{{ border-top:1px solid #000; margin-top:16px; padding-top:8px; }}
     .sig-name{{ color:#000; margin-top:36px; }}
-    .print-footer{{ display:block !important; color:#000; border-top:1.5px solid #000; margin-top:20px; padding-top:10px; text-align:center; font-weight:bold; }}
+    .print-footer{{ display:block !important; }}
+    .print-footer{{ color:#000; border-top:1.5px solid #000; margin-top:20px; padding-top:10px; text-align:center; font-weight:bold; display:none; }}
     .print-header{{ display:none; }}
 }}
 </style>
@@ -861,11 +862,16 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 </div>
 </div>
 </div>"""
-        selected_div = user_division if not is_admin else (division or '')
-        if selected_div:
+        # Show division codes in footer
+        if not is_admin and user_division:
             html += f"""<div class="print-footer">
-<p style="margin:8px 0;">CTLC-{selected_div}</p>
-<p style="margin:8px 0;">SRDEEP-{selected_div}</p>
+<p style="margin:8px 0;">CTLC-{user_division}</p>
+<p style="margin:8px 0;">SRDEEP-{user_division}</p>
+</div>"""
+        elif is_admin and division:
+            html += f"""<div class="print-footer">
+<p style="margin:8px 0;">CTLC-{division}</p>
+<p style="margin:8px 0;">SRDEEP-{division}</p>
 </div>"""
         html += """</body></html>"""
         return html
