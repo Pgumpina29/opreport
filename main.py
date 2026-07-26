@@ -754,7 +754,7 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
                 div_name = row.division or 'Visakhapatnam'
                 div_code = div_codes.get(div_name, 'SCR')
                 html += f"""<div class="report-block">
-<div class="rpt-org"><span>Railway: <b>SCoR</b></span><span>Division: <b>{hv(div_name)} ({div_code})</b></span></div>
+<div class="rpt-org"><span>Railway: <b>SCoR</b></span><span>Division: <b>{div_code}/{hv(div_name)}</b></span></div>
 <div class="block-head"><span>Date: {fdate(row.date)}</span><span>Train: {hv(row.train_no or '')}</span><span>Incident: {hv(row.incident_type or '')}</span></div>
 <h2>1. Section &amp; Incident</h2>
 <div class="grid">
