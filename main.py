@@ -749,13 +749,15 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 <a href="/logout" style="margin-left:auto; background:#c0392b; color:#fff;">Logout</a>
 </div>
 """
-        if not records:
-            html += f'<p class="empty">No records{" for the selected date range" if from_date and to_date else " — choose a date range and press Filter"}.</p>'
+        if not from_date or not to_date:
+            html += '<p class="empty" style="color:#c0392b; font-weight:600; padding:20px; background:#ffe8e8; border-radius:6px;">⚠️ Please select a date range and click Filter to view reports.</p>'
+        elif not records:
+            html += f'<p class="empty">No records for the selected date range.</p>'
         else:
             for row in records:
                 div_name = row.division or 'Visakhapatnam'
                 html += f"""<div class="report-block">
-<div class="rpt-org"><span>Railway: <b>SCoR</b></span><span>Division: <b>CTLC/SRDEEP/{hv(div_name)}</b></span></div>
+<div class="rpt-org"><span>Railway: <b>SCoR</b></span><span>Division: <b>{hv(div_name)}</b></span></div>
 <div class="block-head"><span>Date: {fdate(row.date)}</span><span>Train: {hv(row.train_no or '')}</span><span>Incident: {hv(row.incident_type or '')}</span></div>
 <h2>1. Section &amp; Incident</h2>
 <div class="grid">
@@ -875,8 +877,6 @@ async def delete_record(record_id: int):
 
 @app.get("/export")
 async def export_excel(request: Request, division: Optional[str] = None):
-    from openpyxl import Workbook
-
     auth_check = check_auth(request)
     if auth_check:
         return auth_check
