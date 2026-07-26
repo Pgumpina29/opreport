@@ -118,7 +118,7 @@ async def welcome():
 *{box-sizing:border-box;}
 body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:#fff; min-height:100vh; display:flex; align-items:center; justify-content:center;}
 .flag-banner{width:100%; height:100vh; background:linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;}
-.ashoka{width:120px; height:120px; background:#1f41a0; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:80px; margin-bottom:20px; box-shadow:0 4px 20px rgba(31,65,160,.3);}
+.ashoka{display:none;}
 .welcome-box{text-align:center; background:rgba(255,255,255,.95); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:600px; width:95%; position:relative; z-index:10;}
 h1{color:#1f41a0; font-size:32px; margin:0 0 10px; font-weight:700;}
 h2{color:#ff9933; font-size:24px; margin:0 0 10px; font-weight:700;}
@@ -130,7 +130,17 @@ h2{color:#ff9933; font-size:24px; margin:0 0 10px; font-weight:700;}
 <body>
 <div class="flag-banner">
 <div class="welcome-box">
-<div class="ashoka">🦁</div>
+<svg width="160" height="160" viewBox="0 0 160 160" style="margin:0 auto 20px; display:block;">
+<!-- Outer Saffron Ring -->
+<circle cx="80" cy="80" r="75" fill="none" stroke="#ff9933" stroke-width="12"/>
+<!-- Middle White Ring -->
+<circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="8"/>
+<!-- Inner Green Ring -->
+<circle cx="80" cy="80" r="48" fill="none" stroke="#138808" stroke-width="8"/>
+<!-- Center Blue Circle with Ashoka -->
+<circle cx="80" cy="80" r="40" fill="#1f41a0"/>
+<text x="80" y="95" font-size="50" text-anchor="middle" fill="#fff" font-family="Arial">🦁</text>
+</svg>
 <h1>South Coast Railway</h1>
 <h2>USF-LOGS</h2>
 <p class="sub">Unified Safety Framework<br>Incident Logging System<br><strong>Satyameva Jayate</strong></p>
@@ -154,7 +164,7 @@ async def login_page():
 body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
 .login-box{background:#fff; padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:400px; width:95%;}
 h1{color:#1f41a0; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
-.logo{text-align:center; font-size:60px; margin-bottom:20px;}
+.logo{display:none;}
 .form-group{margin-bottom:20px;}
 label{display:block; font-weight:600; color:#1f41a0; margin-bottom:6px; font-size:13px;}
 input{width:100%; padding:10px 12px; border:2px solid #ccc; border-radius:6px; font-size:14px; font-family:inherit;}
@@ -169,7 +179,17 @@ button:hover{background:#e68822;}
 </head>
 <body>
 <div class="login-box">
-<div class="logo">🦁</div>
+<svg width="120" height="120" viewBox="0 0 160 160" style="margin:0 auto 20px; display:block;">
+<!-- Outer Saffron Ring -->
+<circle cx="80" cy="80" r="75" fill="none" stroke="#ff9933" stroke-width="12"/>
+<!-- Middle White Ring -->
+<circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="8"/>
+<!-- Inner Green Ring -->
+<circle cx="80" cy="80" r="48" fill="none" stroke="#138808" stroke-width="8"/>
+<!-- Center Blue Circle with Ashoka -->
+<circle cx="80" cy="80" r="40" fill="#1f41a0"/>
+<text x="80" y="95" font-size="50" text-anchor="middle" fill="#fff" font-family="Arial">🦁</text>
+</svg>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
 <div class="form-group">
@@ -207,7 +227,7 @@ async def authenticate(username: str = Form(...), password: str = Form(...)):
 body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
 .login-box{background:#fff; padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:400px; width:95%;}
 h1{color:#1f41a0; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
-.logo{text-align:center; font-size:60px; margin-bottom:20px;}
+.logo{display:none;}
 .form-group{margin-bottom:20px;}
 label{display:block; font-weight:600; color:#1f41a0; margin-bottom:6px; font-size:13px;}
 input{width:100%; padding:10px 12px; border:2px solid #ccc; border-radius:6px; font-size:14px; font-family:inherit;}
@@ -221,7 +241,17 @@ button:hover{background:#e68822;}
 </head>
 <body>
 <div class="login-box">
-<div class="logo">🦁</div>
+<svg width="120" height="120" viewBox="0 0 160 160" style="margin:0 auto 20px; display:block;">
+<!-- Outer Saffron Ring -->
+<circle cx="80" cy="80" r="75" fill="none" stroke="#ff9933" stroke-width="12"/>
+<!-- Middle White Ring -->
+<circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="8"/>
+<!-- Inner Green Ring -->
+<circle cx="80" cy="80" r="48" fill="none" stroke="#138808" stroke-width="8"/>
+<!-- Center Blue Circle with Ashoka -->
+<circle cx="80" cy="80" r="40" fill="#1f41a0"/>
+<text x="80" y="95" font-size="50" text-anchor="middle" fill="#fff" font-family="Arial">🦁</text>
+</svg>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
 <div class="error">❌ Invalid username or password. Try again.</div>
