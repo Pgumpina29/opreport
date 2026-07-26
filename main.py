@@ -256,8 +256,7 @@ async def create_incident(
     root_cause: str = Form(None),
     incident_details: str = Form(None),
     dpc_tlc_name: str = Form(None),
-    usf_reflected: str = Form(None),
-    db: Session = None
+    usf_reflected: str = Form(None)
 ):
     db = SessionLocal()
     try:
