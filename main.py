@@ -705,13 +705,16 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
     html,body{{ margin:0; padding:0; background:#fff; color:#000; }}
     .controls{{ display:none; }}
     .tabs{{ display:none; }}
-    .report-block{{ border:1px solid #444; border-radius:0; box-shadow:none; padding:6px 8px; margin:6mm; }}
+    .report-block{{ border:1px solid #444; border-radius:0; box-shadow:none; padding:6px 8px; margin:6mm; page-break-inside:avoid; }}
     h1,.sub{{ display:none; }}
-    .rpt-org{{ color:#000; border-bottom:1px solid #000; }}
-    .rpt-org b{{ color:#000; }}
-    .block-head{{ border-bottom:1.5px solid #000; }}
-    h2{{ color:#000; border-bottom:1px solid #999; }}
-    .flabel{{ color:#000; }}
+    .rpt-org{{ color:#000; border-bottom:1px solid #000; padding-bottom:4px; margin-bottom:6px; }}
+    .rpt-org b{{ color:#000; font-weight:bold; }}
+    .block-head{{ border-bottom:1.5px solid #000; margin-bottom:6px; padding-bottom:4px; }}
+    h2{{ color:#000; border-bottom:1px solid #000; font-size:9pt; margin:8px 0 4px 0; padding-bottom:2px; }}
+    .grid{{ display:flex; flex-wrap:wrap; gap:8px 12px; margin-bottom:6px; }}
+    .field{{ flex:1 1 140px; min-width:120px; }}
+    .flabel{{ color:#000; font-weight:bold; font-size:8pt; }}
+    .fvalue{{ color:#000; font-size:9pt; }}
     .sig-block{{ border-top:1px solid #000; margin-top:16px; padding-top:8px; }}
     .sig-name{{ color:#000; margin-top:36px; }}
 }}
