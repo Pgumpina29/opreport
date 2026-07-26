@@ -179,19 +179,28 @@ button:hover{background:#d4a574;}
 
 @app.post("/auth")
 async def authenticate(username: str = Form(...), password: str = Form(...)):
-    # Admin: username=admin, password=admin@123
-    # User divisions: guntur/guntur123, guntakal/guntakal123, vijayawada/vijayawada123, visakhapatnam/visakhapatnam123
+    # Credentials mapping: username -> (password, division)
+    credentials = {
+        "guntur": ("guntur123", "Guntur"),
+        "guntakal": ("guntakal123", "Guntakal"),
+        "vijayawada": ("vijayawada123", "Vijayawada"),
+        "visakhapatnam": ("visakhapatnam123", "Visakhapatnam"),
+        "bza": ("bza123", "Vijayawada"),
+        "vskp": ("vskp123", "Visakhapatnam")
+    }
+
     if username == "admin" and password == "admin@123":
         response = RedirectResponse(url="/entry", status_code=302)
         response.set_cookie(key="auth", value="logged_in", max_age=3600)
         response.set_cookie(key="role", value="admin", max_age=3600)
         return response
-    elif username in ["guntur", "guntakal", "vijayawada", "visakhapatnam"]:
-        if password == f"{username}123":
+    elif username in credentials:
+        expected_pass, division = credentials[username]
+        if password == expected_pass:
             response = RedirectResponse(url="/entry", status_code=302)
             response.set_cookie(key="auth", value="logged_in", max_age=3600)
             response.set_cookie(key="role", value="user", max_age=3600)
-            response.set_cookie(key="division", value=username.capitalize(), max_age=3600)
+            response.set_cookie(key="division", value=division, max_age=3600)
             return response
     return HTMLResponse("""<!doctype html>
 <html lang="en">
