@@ -1,5 +1,8 @@
 from fastapi import FastAPI, HTTPException, Form, Request
-from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse, StreamingResponse
+import csv
+from io import StringIO, BytesIO
+from openpyxl import Workbook
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text
@@ -130,16 +133,16 @@ h2{color:#ff9933; font-size:24px; margin:0 0 10px; font-weight:700;}
 <body>
 <div class="flag-banner">
 <div class="welcome-box">
-<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
-<svg width="160" height="160" viewBox="0 0 160 160" style="position:absolute;">
+<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
+<svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
 <!-- Outer Saffron Ring -->
-<circle cx="80" cy="80" r="75" fill="none" stroke="#ff9933" stroke-width="12"/>
+<circle cx="100" cy="100" r="95" fill="none" stroke="#ff9933" stroke-width="10"/>
 <!-- Middle White Ring -->
-<circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="8"/>
+<circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-width="8"/>
 <!-- Inner Green Ring -->
-<circle cx="80" cy="80" r="48" fill="none" stroke="#138808" stroke-width="8"/>
+<circle cx="100" cy="100" r="58" fill="none" stroke="#138808" stroke-width="8"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1;" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:100px; height:100px; position:relative; z-index:1;" onerror="this.style.display='none'">
 </div>
 <h1>South Coast Railway</h1>
 <h2>USF-LOGS</h2>
@@ -161,7 +164,7 @@ async def login_page():
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;}
-body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #2c1810 0%, #5b3a29 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
 .login-box{background:#fff; padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:400px; width:95%;}
 h1{color:#1f41a0; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
 .logo{display:none;}
@@ -179,16 +182,16 @@ button:hover{background:#e68822;}
 </head>
 <body>
 <div class="login-box">
-<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
-<svg width="160" height="160" viewBox="0 0 160 160" style="position:absolute;">
+<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
+<svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
 <!-- Outer Saffron Ring -->
-<circle cx="80" cy="80" r="75" fill="none" stroke="#ff9933" stroke-width="12"/>
+<circle cx="100" cy="100" r="95" fill="none" stroke="#ff9933" stroke-width="10"/>
 <!-- Middle White Ring -->
-<circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="8"/>
+<circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-width="8"/>
 <!-- Inner Green Ring -->
-<circle cx="80" cy="80" r="48" fill="none" stroke="#138808" stroke-width="8"/>
+<circle cx="100" cy="100" r="58" fill="none" stroke="#138808" stroke-width="8"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1;" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:100px; height:100px; position:relative; z-index:1;" onerror="this.style.display='none'">
 </div>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
@@ -211,10 +214,20 @@ button:hover{background:#e68822;}
 
 @app.post("/auth")
 async def authenticate(username: str = Form(...), password: str = Form(...)):
-    if username == "admin" and password == "admin123":
+    # Admin: username=admin, password=admin@123
+    # User divisions: guntur/guntur123, guntakal/guntakal123, vijayawada/vijayawada123, visakhapatnam/visakhapatnam123
+    if username == "admin" and password == "admin@123":
         response = RedirectResponse(url="/entry", status_code=302)
         response.set_cookie(key="auth", value="logged_in", max_age=3600)
+        response.set_cookie(key="role", value="admin", max_age=3600)
         return response
+    elif username in ["guntur", "guntakal", "vijayawada", "visakhapatnam"]:
+        if password == f"{username}123":
+            response = RedirectResponse(url="/entry", status_code=302)
+            response.set_cookie(key="auth", value="logged_in", max_age=3600)
+            response.set_cookie(key="role", value="user", max_age=3600)
+            response.set_cookie(key="division", value=username.capitalize(), max_age=3600)
+            return response
     return HTMLResponse("""<!doctype html>
 <html lang="en">
 <head>
@@ -224,7 +237,7 @@ async def authenticate(username: str = Form(...), password: str = Form(...)):
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;}
-body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #2c1810 0%, #5b3a29 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
 .login-box{background:#fff; padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:400px; width:95%;}
 h1{color:#1f41a0; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
 .logo{display:none;}
@@ -241,16 +254,16 @@ button:hover{background:#e68822;}
 </head>
 <body>
 <div class="login-box">
-<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
-<svg width="160" height="160" viewBox="0 0 160 160" style="position:absolute;">
+<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
+<svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
 <!-- Outer Saffron Ring -->
-<circle cx="80" cy="80" r="75" fill="none" stroke="#ff9933" stroke-width="12"/>
+<circle cx="100" cy="100" r="95" fill="none" stroke="#ff9933" stroke-width="10"/>
 <!-- Middle White Ring -->
-<circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="8"/>
+<circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-width="8"/>
 <!-- Inner Green Ring -->
-<circle cx="80" cy="80" r="48" fill="none" stroke="#138808" stroke-width="8"/>
+<circle cx="100" cy="100" r="58" fill="none" stroke="#138808" stroke-width="8"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1;" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:100px; height:100px; position:relative; z-index:1;" onerror="this.style.display='none'">
 </div>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
@@ -668,15 +681,30 @@ tbody tr:hover{ background:#fdf8ee; }
         db.close()
 
 @app.get("/report", response_class=HTMLResponse)
-async def get_report(request: Request, from_date: Optional[str] = None, to_date: Optional[str] = None):
+async def get_report(request: Request, from_date: Optional[str] = None, to_date: Optional[str] = None, division: Optional[str] = None):
     auth_check = check_auth(request)
     if auth_check:
         return auth_check
+
     db = SessionLocal()
     try:
+        is_admin = request.cookies.get("role") == "admin"
+        user_division = request.cookies.get("division", "")
+
         records = []
+        query = db.query(SectionCase)
+
+        # Filter by date range if provided
         if from_date and to_date:
-            records = db.query(SectionCase).filter(SectionCase.date.between(from_date, to_date)).order_by(SectionCase.date.desc()).all()
+            query = query.filter(SectionCase.date.between(from_date, to_date))
+
+        # Filter by division
+        if division and is_admin:
+            query = query.filter(SectionCase.division == division)
+        elif not is_admin:
+            query = query.filter(SectionCase.division == user_division)
+
+        records = query.order_by(SectionCase.date.desc()).all()
 
         html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -742,7 +770,16 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 <label>To <input type="date" name="to_date" value="{hv(to_date or '')}"></label>
 <button type="submit" class="btn-filter">Filter</button>
 <button type="button" class="btn-print" onclick="window.print()">Print</button>
+<a href="/export" style="margin-left:auto; display:inline-block; background:#138808; color:#fff; padding:7px 16px; border-radius:6px; text-decoration:none; font-weight:600; cursor:pointer;">📊 Export to Excel</a>
 </form>
+</div>
+
+<div class="division-tabs" style="display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;">
+<a href="/report" style="padding:8px 16px; border-radius:6px; background:{'' if not division else '#efe3cd'}; color:#5b3a29; text-decoration:none; font-weight:600;">All</a>
+<a href="/report?division=Visakhapatnam" style="padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Visakhapatnam' else '#efe3cd'}; color:{'#fff' if division == 'Visakhapatnam' else '#5b3a29'}; text-decoration:none; font-weight:600;">Visakhapatnam</a>
+<a href="/report?division=Guntakal" style="padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Guntakal' else '#efe3cd'}; color:{'#fff' if division == 'Guntakal' else '#5b3a29'}; text-decoration:none; font-weight:600;">Guntakal</a>
+<a href="/report?division=Vijayawada" style="padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Vijayawada' else '#efe3cd'}; color:{'#fff' if division == 'Vijayawada' else '#5b3a29'}; text-decoration:none; font-weight:600;">Vijayawada</a>
+<a href="/report?division=Guntur" style="padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Guntur' else '#efe3cd'}; color:{'#fff' if division == 'Guntur' else '#5b3a29'}; text-decoration:none; font-weight:600;">Guntur</a>
 </div>
 
 <div class="tabs">
@@ -870,6 +907,50 @@ async def delete_record(record_id: int):
     finally:
         db.close()
 
+@app.get("/export")
+async def export_excel(request: Request, division: Optional[str] = None):
+    auth_check = check_auth(request)
+    if auth_check:
+        return auth_check
+
+    db = SessionLocal()
+    try:
+        is_admin = request.cookies.get("role") == "admin"
+
+        if is_admin:
+            records = db.query(SectionCase).order_by(SectionCase.date.desc()).all()
+        else:
+            user_division = request.cookies.get("division", "")
+            records = db.query(SectionCase).filter(SectionCase.division == user_division).order_by(SectionCase.date.desc()).all()
+
+        if division and is_admin:
+            records = [r for r in records if r.division == division]
+
+        wb = Workbook()
+        ws = wb.active
+        ws.title = "Section Cases"
+
+        headers = ['ID', 'S.No', 'Date', 'Time', 'Division', 'Section', 'Train No', 'Incident Type', 'LP Name', 'Incident Details']
+        ws.append(headers)
+
+        for record in records:
+            ws.append([
+                record.id, record.sno, record.date, record.incident_time, record.division,
+                record.section, record.train_no, record.incident_type, record.lp_name, record.incident_details
+            ])
+
+        output = BytesIO()
+        wb.save(output)
+        output.seek(0)
+
+        return StreamingResponse(
+            iter([output.getvalue()]),
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            headers={"Content-Disposition": "attachment; filename=usf_reports.xlsx"}
+        )
+    finally:
+        db.close()
+
 @app.get("/edit/{record_id}")
 async def edit_record_page(record_id: int):
     db = SessionLocal()
@@ -877,7 +958,6 @@ async def edit_record_page(record_id: int):
         row = db.query(SectionCase).filter(SectionCase.id == record_id).first()
         if not row:
             raise HTTPException(status_code=404, detail="Record not found")
-        # Return edit form (simplified - same as new entry but pre-filled)
         return HTMLResponse(f"Edit form for record {record_id} - TODO")
     finally:
         db.close()
