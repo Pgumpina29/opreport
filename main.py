@@ -23,6 +23,7 @@ class SectionCase(Base):
     sno = Column(String, nullable=True)
     date = Column(String, nullable=True)
     incident_time = Column(String, nullable=True)
+    division = Column(String, nullable=True)
     section = Column(String, nullable=True)
     major_section = Column(String, nullable=True)
     minor_section = Column(String, nullable=True)
@@ -105,7 +106,38 @@ def fdate(s):
         return hv(str(s))
 
 @app.get("/", response_class=HTMLResponse)
-async def read_root():
+async def welcome():
+    return """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>South Coast Railway USF-LOGS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #2c1810 0%, #5b3a29 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+.welcome-box{text-align:center; background:#fff; padding:40px; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,.2); max-width:500px; width:95%;}
+.symbol{font-size:60px; margin-bottom:20px;}
+h1{color:#5b3a29; font-size:28px; margin:0 0 10px; font-weight:700;}
+.sub{color:#7a6450; font-size:16px; margin:0 0 30px; line-height:1.6;}
+.btn{display:inline-block; background:#2e8b57; color:#fff; padding:12px 40px; border-radius:6px; text-decoration:none; font-weight:600; font-size:16px; border:none; cursor:pointer; transition:.3s;}
+.btn:hover{background:#256b44;}
+</style>
+</head>
+<body>
+<div class="welcome-box">
+<div class="symbol">🦁</div>
+<h1>Welcome to</h1>
+<h2 style="color:#5b3a29; font-size:20px; margin:0 0 20px;">South Coast Railway</h2>
+<p class="sub">USF-LOGS<br>Unified Safety Framework - Incident Logging System</p>
+<a href="/entry" class="btn">Click here to Enter</a>
+</div>
+</body>
+</html>"""
+
+@app.get("/entry", response_class=HTMLResponse)
+async def read_entry():
     return """<!doctype html>
 <html lang="en">
 <head>
@@ -198,7 +230,7 @@ button:hover{background:var(--green-dark);}
 <div class="page-head">
     <h1>Section Incident Entry</h1>
     <nav class="tabs">
-        <a class="active" href="/">New Entry</a>
+        <a class="active" href="/entry">New Entry</a>
         <a href="/records">Edit Records</a>
         <a href="/report">View Report</a>
     </nav>
@@ -212,6 +244,7 @@ button:hover{background:var(--green-dark);}
 <label>S.No</label><input name="sno" type="text">
 <label>Date of Incidence</label><input type="date" name="date" required>
 <label>Time of Incidence</label><input type="time" name="incident_time">
+<label>Division</label><select name="division" required><option value="">-- select --</option><option>Guntur</option><option>Guntakal</option><option>Vijayawada</option><option>Visakhapatnam</option></select>
 <label>Section</label><input name="section" type="text">
 <label>Major Section</label><select name="major_section"><option value="">-- select --</option><option>RV</option><option>PSA</option><option>COMPLEX</option></select>
 <label>Minor Section</label><input name="minor_section" type="text">
@@ -321,6 +354,7 @@ async def create_incident(
     sno: str = Form(None),
     date: str = Form(...),
     incident_time: str = Form(None),
+    division: str = Form(None),
     section: str = Form(None),
     major_section: str = Form(None),
     minor_section: str = Form(None),
@@ -380,7 +414,7 @@ async def create_incident(
     db = SessionLocal()
     try:
         incident = SectionCase(
-            sno=sno, date=date, incident_time=incident_time, section=section,
+            sno=sno, date=date, incident_time=incident_time, division=division, section=section,
             major_section=major_section, minor_section=minor_section, location=location,
             gradient=gradient, curvature=curvature, weather=weather, sanders=sanders,
             spare_sandbags=spare_sandbags, incident_type=incident_type, train_no=train_no,
@@ -406,7 +440,7 @@ async def create_incident(
         <html><body style="font-family: Montserrat; margin: 20px;">
             <div style="background:#e8f6ec; color:#0f6b34; padding:12px; border-radius:6px; border:1px solid #a8d5b8;">
             <h2 style="margin:0 0 8px;">✓ Saved successfully!</h2>
-            <a href="/">← Back to form</a>
+            <a href="/entry">← Back to form</a>
             </div>
         </body></html>
         """)
@@ -422,6 +456,7 @@ async def get_records():
     try:
         recs = db.query(SectionCase).order_by(SectionCase.id.desc()).limit(50).all()
         html = """<!doctype html>
+
 <html><head><meta charset="utf-8"><title>Section Incident Records</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -449,13 +484,13 @@ tbody tr:hover{ background:#fdf8ee; }
 <div class="container">
 <h1>Section Incident Records</h1>
 <div class="tabs">
-<a href="/">New Entry</a>
+<a href="/entry">New Entry</a>
 <a class="active" href="/records">Edit Records</a>
 <a href="/report">View Report</a>
 </div>
 <h3>Saved Records (latest 50) — click Edit to modify</h3>
 <table>
-<thead><tr><th>ID</th><th>Sno</th><th>Date</th><th>Train No</th><th>Incident</th><th>Action</th></tr></thead>
+<thead><tr><th>ID</th><th>Sno</th><th>Date</th><th>Division</th><th>Train No</th><th>Incident</th><th>Action</th></tr></thead>
 <tbody>
 """
         if recs:
@@ -464,6 +499,7 @@ tbody tr:hover{ background:#fdf8ee; }
 <td>{r.id}</td>
 <td>{hv(r.sno or '')}</td>
 <td>{hv(r.date or '')}</td>
+<td>{hv(r.division or '')}</td>
 <td>{hv(r.train_no or '')}</td>
 <td>{hv(r.incident_type or '')}</td>
 <td>
@@ -472,7 +508,7 @@ tbody tr:hover{ background:#fdf8ee; }
 </td>
 </tr>"""
         else:
-            html += '<tr><td colspan="6" class="empty">No records yet.</td></tr>'
+            html += '<tr><td colspan="7" class="empty">No records yet.</td></tr>'
         html += """</tbody></table>
 </div></body></html>"""
         return html
@@ -555,7 +591,7 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 </div>
 
 <div class="tabs">
-<a href="/">New Entry</a>
+<a href="/entry">New Entry</a>
 <a href="/records">Edit Records</a>
 <a class="active" href="/report">View Report</a>
 </div>
@@ -565,11 +601,12 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
         else:
             for row in records:
                 html += f"""<div class="report-block">
-<div class="rpt-org"><span>Railway: <b>SCoR</b></span><span>Division: <b>Visakhapatnam</b></span></div>
+<div class="rpt-org"><span>Railway: <b>SCoR</b></span><span>Division: <b>{hv(row.division or 'Visakhapatnam')}</b></span></div>
 <div class="block-head"><span>Date: {fdate(row.date)}</span><span>Train: {hv(row.train_no or '')}</span><span>Incident: {hv(row.incident_type or '')}</span></div>
 <h2>1. Section &amp; Incident</h2>
 <div class="grid">
 <div class="field"><div class="flabel">S.No</div><div class="fvalue">{hv(row.sno or '-')}</div></div>
+<div class="field"><div class="flabel">Division</div><div class="fvalue">{hv(row.division or '-')}</div></div>
 <div class="field"><div class="flabel">Time</div><div class="fvalue">{hv(row.incident_time or '-')}</div></div>
 <div class="field"><div class="flabel">Section</div><div class="fvalue">{hv(row.section or '-')}</div></div>
 <div class="field"><div class="flabel">Major Section</div><div class="fvalue">{hv(row.major_section or '-')}</div></div>
