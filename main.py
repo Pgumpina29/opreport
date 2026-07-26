@@ -99,6 +99,7 @@ app.add_middleware(
 )
 
 def hv(v):
+    # HTML escape utility
     return str(v or '').replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
 
 def fdate(s):
