@@ -1,5 +1,5 @@
-from fastapi import FastAPI, HTTPException, Form
-from fastapi.responses import HTMLResponse, FileResponse
+from fastapi import FastAPI, HTTPException, Form, Request
+from fastapi.responses import HTMLResponse, FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text
@@ -116,28 +116,139 @@ async def welcome():
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;}
-body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #2c1810 0%, #5b3a29 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
-.welcome-box{text-align:center; background:#fff; padding:40px; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,.2); max-width:500px; width:95%;}
-.symbol{font-size:60px; margin-bottom:20px;}
-h1{color:#5b3a29; font-size:28px; margin:0 0 10px; font-weight:700;}
-.sub{color:#7a6450; font-size:16px; margin:0 0 30px; line-height:1.6;}
-.btn{display:inline-block; background:#2e8b57; color:#fff; padding:12px 40px; border-radius:6px; text-decoration:none; font-weight:600; font-size:16px; border:none; cursor:pointer; transition:.3s;}
-.btn:hover{background:#256b44;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:#fff; min-height:100vh; display:flex; align-items:center; justify-content:center;}
+.flag-banner{width:100%; height:100vh; background:linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;}
+.ashoka{width:120px; height:120px; background:#1f41a0; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:80px; margin-bottom:20px; box-shadow:0 4px 20px rgba(31,65,160,.3);}
+.welcome-box{text-align:center; background:rgba(255,255,255,.95); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:600px; width:95%; position:relative; z-index:10;}
+h1{color:#1f41a0; font-size:32px; margin:0 0 10px; font-weight:700;}
+h2{color:#ff9933; font-size:24px; margin:0 0 10px; font-weight:700;}
+.sub{color:#7a6450; font-size:16px; margin:0 0 30px; line-height:1.8;}
+.btn{display:inline-block; background:#ff9933; color:#fff; padding:14px 50px; border-radius:6px; text-decoration:none; font-weight:700; font-size:16px; border:none; cursor:pointer; transition:.3s; margin-top:10px;}
+.btn:hover{background:#e68822;}
 </style>
 </head>
 <body>
+<div class="flag-banner">
 <div class="welcome-box">
-<div class="symbol">🦁</div>
-<h1>Welcome to</h1>
-<h2 style="color:#5b3a29; font-size:20px; margin:0 0 20px;">South Coast Railway</h2>
-<p class="sub">USF-LOGS<br>Unified Safety Framework - Incident Logging System</p>
-<a href="/entry" class="btn">Click here to Enter</a>
+<div class="ashoka">🦁</div>
+<h1>South Coast Railway</h1>
+<h2>USF-LOGS</h2>
+<p class="sub">Unified Safety Framework<br>Incident Logging System<br><strong>Satyameva Jayate</strong></p>
+<a href="/login" class="btn">Click here to Enter</a>
+</div>
 </div>
 </body>
 </html>"""
 
+@app.get("/login", response_class=HTMLResponse)
+async def login_page():
+    return """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Login - USF-LOGS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+.login-box{background:#fff; padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:400px; width:95%;}
+h1{color:#1f41a0; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
+.logo{text-align:center; font-size:60px; margin-bottom:20px;}
+.form-group{margin-bottom:20px;}
+label{display:block; font-weight:600; color:#1f41a0; margin-bottom:6px; font-size:13px;}
+input{width:100%; padding:10px 12px; border:2px solid #ccc; border-radius:6px; font-size:14px; font-family:inherit;}
+input:focus{outline:none; border-color:#1f41a0; box-shadow:0 0 0 3px rgba(31,65,160,.1);}
+button{width:100%; padding:11px; background:#ff9933; color:#fff; border:none; border-radius:6px; font-weight:700; font-size:15px; cursor:pointer; transition:.3s;}
+button:hover{background:#e68822;}
+.error{color:#c0392b; font-size:13px; margin-top:15px; text-align:center; padding:10px; background:#ffecec; border-radius:6px; border:1px solid #e3a3a3;}
+.back{text-align:center; margin-top:15px;}
+.back a{color:#1f41a0; text-decoration:none; font-size:13px;}
+.back a:hover{text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="login-box">
+<div class="logo">🦁</div>
+<h1>USF-LOGS Login</h1>
+<form method="POST" action="/auth">
+<div class="form-group">
+<label>Username</label>
+<input type="text" name="username" required placeholder="Enter username" autocomplete="off">
+</div>
+<div class="form-group">
+<label>Password</label>
+<input type="password" name="password" required placeholder="Enter password" autocomplete="off">
+</div>
+<button type="submit">Login</button>
+</form>
+<div class="back">
+<a href="/">← Back</a>
+</div>
+</div>
+</body>
+</html>"""
+
+@app.post("/auth")
+async def authenticate(username: str = Form(...), password: str = Form(...)):
+    if username == "admin" and password == "admin123":
+        response = RedirectResponse(url="/entry", status_code=302)
+        response.set_cookie(key="auth", value="logged_in", max_age=3600)
+        return response
+    return HTMLResponse("""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Login - USF-LOGS</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+.login-box{background:#fff; padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:400px; width:95%;}
+h1{color:#1f41a0; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
+.logo{text-align:center; font-size:60px; margin-bottom:20px;}
+.form-group{margin-bottom:20px;}
+label{display:block; font-weight:600; color:#1f41a0; margin-bottom:6px; font-size:13px;}
+input{width:100%; padding:10px 12px; border:2px solid #ccc; border-radius:6px; font-size:14px; font-family:inherit;}
+input:focus{outline:none; border-color:#1f41a0; box-shadow:0 0 0 3px rgba(31,65,160,.1);}
+button{width:100%; padding:11px; background:#ff9933; color:#fff; border:none; border-radius:6px; font-weight:700; font-size:15px; cursor:pointer; transition:.3s;}
+button:hover{background:#e68822;}
+.error{color:#c0392b; font-size:13px; margin-top:15px; text-align:center; padding:10px; background:#ffecec; border-radius:6px; border:1px solid #e3a3a3;}
+.back{text-align:center; margin-top:15px;}
+.back a{color:#1f41a0; text-decoration:none; font-size:13px;}
+</style>
+</head>
+<body>
+<div class="login-box">
+<div class="logo">🦁</div>
+<h1>USF-LOGS Login</h1>
+<form method="POST" action="/auth">
+<div class="error">❌ Invalid username or password. Try again.</div>
+<div class="form-group">
+<label>Username</label>
+<input type="text" name="username" required placeholder="Enter username" autocomplete="off">
+</div>
+<div class="form-group">
+<label>Password</label>
+<input type="password" name="password" required placeholder="Enter password" autocomplete="off">
+</div>
+<button type="submit">Login</button>
+</form>
+<div class="back">
+<a href="/">← Back</a>
+</div>
+</div>
+</body>
+</html>""")
+
+def check_auth(request: Request):
+    if not request.cookies.get("auth"):
+        return RedirectResponse(url="/login", status_code=302)
+    return None
+
 @app.get("/entry", response_class=HTMLResponse)
-async def read_entry():
+async def read_entry(request: Request):
     return """<!doctype html>
 <html lang="en">
 <head>
@@ -233,6 +344,7 @@ button:hover{background:var(--green-dark);}
         <a class="active" href="/entry">New Entry</a>
         <a href="/records">Edit Records</a>
         <a href="/report">View Report</a>
+        <a href="/logout" style="margin-left:auto; background:#c0392b; color:#fff;">Logout</a>
     </nav>
 </div>
 
@@ -450,8 +562,17 @@ async def create_incident(
     finally:
         db.close()
 
+@app.get("/logout")
+async def logout():
+    response = RedirectResponse(url="/", status_code=302)
+    response.delete_cookie("auth")
+    return response
+
 @app.get("/records", response_class=HTMLResponse)
-async def get_records():
+async def get_records(request: Request):
+    auth_check = check_auth(request)
+    if auth_check:
+        return auth_check
     db = SessionLocal()
     try:
         recs = db.query(SectionCase).order_by(SectionCase.id.desc()).limit(50).all()
@@ -487,6 +608,7 @@ tbody tr:hover{ background:#fdf8ee; }
 <a href="/entry">New Entry</a>
 <a class="active" href="/records">Edit Records</a>
 <a href="/report">View Report</a>
+<a href="/logout" style="margin-left:auto; background:#c0392b; color:#fff;">Logout</a>
 </div>
 <h3>Saved Records (latest 50) — click Edit to modify</h3>
 <table>
@@ -516,7 +638,10 @@ tbody tr:hover{ background:#fdf8ee; }
         db.close()
 
 @app.get("/report", response_class=HTMLResponse)
-async def get_report(from_date: Optional[str] = None, to_date: Optional[str] = None):
+async def get_report(request: Request, from_date: Optional[str] = None, to_date: Optional[str] = None):
+    auth_check = check_auth(request)
+    if auth_check:
+        return auth_check
     db = SessionLocal()
     try:
         records = []
@@ -594,6 +719,7 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 <a href="/entry">New Entry</a>
 <a href="/records">Edit Records</a>
 <a class="active" href="/report">View Report</a>
+<a href="/logout" style="margin-left:auto; background:#c0392b; color:#fff;">Logout</a>
 </div>
 """
         if not records:
