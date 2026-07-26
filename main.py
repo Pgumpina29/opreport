@@ -397,7 +397,7 @@ async def export_excel(from_date: Optional[str] = None, to_date: Optional[str] =
         db.close()
 
 @app.get("/api/incidents")
-async def get_incidents(db: Session = None):
+async def get_incidents():
     db = SessionLocal()
     try:
         incidents = db.query(SectionCase).all()
