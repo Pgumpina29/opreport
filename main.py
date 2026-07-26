@@ -111,49 +111,9 @@ def fdate(s):
     except:
         return hv(str(s))
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
 async def welcome():
-    return """<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>South Coast Railway USF-LOGS</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-*{box-sizing:border-box;}
-body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
-.dark-banner{width:100%; height:100vh; background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;}
-.welcome-box{text-align:center; background:rgba(45,45,45,.98); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); max-width:600px; width:95%; position:relative; z-index:10; border:1px solid #444;}
-h1{color:#e7b35a; font-size:32px; margin:0 0 10px; font-weight:700;}
-h2{color:#d4a574; font-size:24px; margin:0 0 10px; font-weight:700;}
-.sub{color:#a8a8a8; font-size:16px; margin:0 0 30px; line-height:1.8;}
-.btn{display:inline-block; background:#e7b35a; color:#1a1a1a; padding:14px 50px; border-radius:6px; text-decoration:none; font-weight:700; font-size:16px; border:none; cursor:pointer; transition:.3s; margin-top:10px;}
-.btn:hover{background:#d4a574;}
-</style>
-</head>
-<body>
-<div class="dark-banner">
-<div class="welcome-box">
-<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center; padding:20px;">
-<svg width="160" height="160" viewBox="0 0 200 200" style="position:absolute;">
-<!-- Outer Ring with spacing -->
-<circle cx="100" cy="100" r="70" fill="none" stroke="#e7b35a" stroke-width="6"/>
-<!-- Middle Ring -->
-<circle cx="100" cy="100" r="55" fill="none" stroke="#d4a574" stroke-width="5"/>
-<!-- Inner Ring -->
-<circle cx="100" cy="100" r="42" fill="none" stroke="#a8a8a8" stroke-width="4"/>
-</svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:80px; height:80px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
-</div>
-<h1>South Coast Railway</h1>
-<h2>USF-LOGS</h2>
-<p class="sub">Unified Safety Framework<br>Incident Logging System<br><strong>Satyameva Jayate</strong></p>
-<a href="/login" class="btn">Click here to Enter</a>
-</div>
-</div>
-</body>
-</html>"""
+    return RedirectResponse(url="/login", status_code=302)
 
 @app.get("/login", response_class=HTMLResponse)
 async def login_page():
