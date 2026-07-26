@@ -12,6 +12,9 @@ from datetime import datetime
 from typing import Optional
 import os
 from dotenv import load_dotenv
+import shutil
+import subprocess
+from pathlib import Path
 
 load_dotenv()
 
@@ -119,30 +122,29 @@ async def welcome():
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;}
-body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:#fff; min-height:100vh; display:flex; align-items:center; justify-content:center;}
-.flag-banner{width:100%; height:100vh; background:linear-gradient(to bottom, #ff9933 0%, #ff9933 33.33%, #fff 33.33%, #fff 66.66%, #138808 66.66%, #138808 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;}
-.ashoka{display:none;}
-.welcome-box{text-align:center; background:rgba(255,255,255,.95); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:600px; width:95%; position:relative; z-index:10;}
-h1{color:#1f41a0; font-size:32px; margin:0 0 10px; font-weight:700;}
-h2{color:#ff9933; font-size:24px; margin:0 0 10px; font-weight:700;}
-.sub{color:#7a6450; font-size:16px; margin:0 0 30px; line-height:1.8;}
-.btn{display:inline-block; background:#ff9933; color:#fff; padding:14px 50px; border-radius:6px; text-decoration:none; font-weight:700; font-size:16px; border:none; cursor:pointer; transition:.3s; margin-top:10px;}
-.btn:hover{background:#e68822;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+.dark-banner{width:100%; height:100vh; background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;}
+.welcome-box{text-align:center; background:rgba(45,45,45,.98); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); max-width:600px; width:95%; position:relative; z-index:10; border:1px solid #444;}
+h1{color:#e7b35a; font-size:32px; margin:0 0 10px; font-weight:700;}
+h2{color:#d4a574; font-size:24px; margin:0 0 10px; font-weight:700;}
+.sub{color:#a8a8a8; font-size:16px; margin:0 0 30px; line-height:1.8;}
+.btn{display:inline-block; background:#e7b35a; color:#1a1a1a; padding:14px 50px; border-radius:6px; text-decoration:none; font-weight:700; font-size:16px; border:none; cursor:pointer; transition:.3s; margin-top:10px;}
+.btn:hover{background:#d4a574;}
 </style>
 </head>
 <body>
-<div class="flag-banner">
+<div class="dark-banner">
 <div class="welcome-box">
-<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
-<svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
-<!-- Outer Saffron Ring -->
-<circle cx="100" cy="100" r="95" fill="none" stroke="#ff9933" stroke-width="10"/>
-<!-- Middle White Ring -->
-<circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-width="8"/>
-<!-- Inner Green Ring -->
-<circle cx="100" cy="100" r="58" fill="none" stroke="#138808" stroke-width="8"/>
+<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center; padding:20px;">
+<svg width="160" height="160" viewBox="0 0 200 200" style="position:absolute;">
+<!-- Outer Ring with spacing -->
+<circle cx="100" cy="100" r="70" fill="none" stroke="#e7b35a" stroke-width="6"/>
+<!-- Middle Ring -->
+<circle cx="100" cy="100" r="55" fill="none" stroke="#d4a574" stroke-width="5"/>
+<!-- Inner Ring -->
+<circle cx="100" cy="100" r="42" fill="none" stroke="#a8a8a8" stroke-width="4"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:100px; height:100px; position:relative; z-index:1;" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:80px; height:80px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
 </div>
 <h1>South Coast Railway</h1>
 <h2>USF-LOGS</h2>
@@ -164,36 +166,40 @@ async def login_page():
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;}
-body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #2c1810 0%, #5b3a29 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
-.login-box{background:#fff; padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:400px; width:95%;}
-h1{color:#1f41a0; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
-.logo{display:none;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+.login-box{background:rgba(45,45,45,.98); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); max-width:400px; width:95%; border:1px solid #444;}
+h1{color:#e7b35a; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
+.creds{color:#a8a8a8; font-size:11px; margin:0 0 20px; padding:10px; background:#1a1a1a; border-radius:6px; border-left:3px solid #e7b35a;}
+.creds strong{color:#d4a574;}
 .form-group{margin-bottom:20px;}
-label{display:block; font-weight:600; color:#1f41a0; margin-bottom:6px; font-size:13px;}
-input{width:100%; padding:10px 12px; border:2px solid #ccc; border-radius:6px; font-size:14px; font-family:inherit;}
-input:focus{outline:none; border-color:#1f41a0; box-shadow:0 0 0 3px rgba(31,65,160,.1);}
-button{width:100%; padding:11px; background:#ff9933; color:#fff; border:none; border-radius:6px; font-weight:700; font-size:15px; cursor:pointer; transition:.3s;}
-button:hover{background:#e68822;}
-.error{color:#c0392b; font-size:13px; margin-top:15px; text-align:center; padding:10px; background:#ffecec; border-radius:6px; border:1px solid #e3a3a3;}
+label{display:block; font-weight:600; color:#d4a574; margin-bottom:6px; font-size:13px;}
+input{width:100%; padding:10px 12px; border:2px solid #444; border-radius:6px; font-size:14px; font-family:inherit; background:#1a1a1a; color:#fff;}
+input:focus{outline:none; border-color:#e7b35a; box-shadow:0 0 0 3px rgba(231,179,90,.1);}
+button{width:100%; padding:11px; background:#e7b35a; color:#1a1a1a; border:none; border-radius:6px; font-weight:700; font-size:15px; cursor:pointer; transition:.3s;}
+button:hover{background:#d4a574;}
+.error{color:#ff6b6b; font-size:13px; margin-top:15px; text-align:center; padding:10px; background:#3a1a1a; border-radius:6px; border:1px solid #8a3a3a;}
 .back{text-align:center; margin-top:15px;}
-.back a{color:#1f41a0; text-decoration:none; font-size:13px;}
+.back a{color:#e7b35a; text-decoration:none; font-size:13px;}
 .back a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
 <div class="login-box">
-<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
-<svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
-<!-- Outer Saffron Ring -->
-<circle cx="100" cy="100" r="95" fill="none" stroke="#ff9933" stroke-width="10"/>
-<!-- Middle White Ring -->
-<circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-width="8"/>
-<!-- Inner Green Ring -->
-<circle cx="100" cy="100" r="58" fill="none" stroke="#138808" stroke-width="8"/>
+<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center; padding:20px;">
+<svg width="160" height="160" viewBox="0 0 200 200" style="position:absolute;">
+<circle cx="100" cy="100" r="70" fill="none" stroke="#e7b35a" stroke-width="6"/>
+<circle cx="100" cy="100" r="55" fill="none" stroke="#d4a574" stroke-width="5"/>
+<circle cx="100" cy="100" r="42" fill="none" stroke="#a8a8a8" stroke-width="4"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:100px; height:100px; position:relative; z-index:1;" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:80px; height:80px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
 </div>
 <h1>USF-LOGS Login</h1>
+<div class="creds">
+<strong>Demo Credentials:</strong><br>
+Admin: <strong>admin</strong> / <strong>admin@123</strong><br>
+User: <strong>guntur</strong> / <strong>guntur123</strong><br>
+(also: guntakal, vijayawada, visakhapatnam + same pattern)
+</div>
 <form method="POST" action="/auth">
 <div class="form-group">
 <label>Username</label>
@@ -237,33 +243,30 @@ async def authenticate(username: str = Form(...), password: str = Form(...)):
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;}
-body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #2c1810 0%, #5b3a29 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
-.login-box{background:#fff; padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.2); max-width:400px; width:95%;}
-h1{color:#1f41a0; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
-.logo{display:none;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+.login-box{background:rgba(45,45,45,.98); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); max-width:400px; width:95%; border:1px solid #444;}
+h1{color:#e7b35a; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
 .form-group{margin-bottom:20px;}
-label{display:block; font-weight:600; color:#1f41a0; margin-bottom:6px; font-size:13px;}
-input{width:100%; padding:10px 12px; border:2px solid #ccc; border-radius:6px; font-size:14px; font-family:inherit;}
-input:focus{outline:none; border-color:#1f41a0; box-shadow:0 0 0 3px rgba(31,65,160,.1);}
-button{width:100%; padding:11px; background:#ff9933; color:#fff; border:none; border-radius:6px; font-weight:700; font-size:15px; cursor:pointer; transition:.3s;}
-button:hover{background:#e68822;}
-.error{color:#c0392b; font-size:13px; margin-top:15px; text-align:center; padding:10px; background:#ffecec; border-radius:6px; border:1px solid #e3a3a3;}
+label{display:block; font-weight:600; color:#d4a574; margin-bottom:6px; font-size:13px;}
+input{width:100%; padding:10px 12px; border:2px solid #444; border-radius:6px; font-size:14px; font-family:inherit; background:#1a1a1a; color:#fff;}
+input:focus{outline:none; border-color:#e7b35a; box-shadow:0 0 0 3px rgba(231,179,90,.1);}
+button{width:100%; padding:11px; background:#e7b35a; color:#1a1a1a; border:none; border-radius:6px; font-weight:700; font-size:15px; cursor:pointer; transition:.3s;}
+button:hover{background:#d4a574;}
+.error{color:#ff6b6b; font-size:13px; margin-bottom:15px; text-align:center; padding:10px; background:#3a1a1a; border-radius:6px; border:1px solid #8a3a3a;}
 .back{text-align:center; margin-top:15px;}
-.back a{color:#1f41a0; text-decoration:none; font-size:13px;}
+.back a{color:#e7b35a; text-decoration:none; font-size:13px;}
+.back a:hover{text-decoration:underline;}
 </style>
 </head>
 <body>
 <div class="login-box">
-<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
-<svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
-<!-- Outer Saffron Ring -->
-<circle cx="100" cy="100" r="95" fill="none" stroke="#ff9933" stroke-width="10"/>
-<!-- Middle White Ring -->
-<circle cx="100" cy="100" r="75" fill="none" stroke="#fff" stroke-width="8"/>
-<!-- Inner Green Ring -->
-<circle cx="100" cy="100" r="58" fill="none" stroke="#138808" stroke-width="8"/>
+<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center; padding:20px;">
+<svg width="160" height="160" viewBox="0 0 200 200" style="position:absolute;">
+<circle cx="100" cy="100" r="70" fill="none" stroke="#e7b35a" stroke-width="6"/>
+<circle cx="100" cy="100" r="55" fill="none" stroke="#d4a574" stroke-width="5"/>
+<circle cx="100" cy="100" r="42" fill="none" stroke="#a8a8a8" stroke-width="4"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:100px; height:100px; position:relative; z-index:1;" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:80px; height:80px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
 </div>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
@@ -961,3 +964,46 @@ async def edit_record_page(record_id: int):
         return HTMLResponse(f"Edit form for record {record_id} - TODO")
     finally:
         db.close()
+
+@app.get("/backup")
+async def backup_database(request: Request):
+    auth_check = check_auth(request)
+    if auth_check:
+        return auth_check
+
+    is_admin = request.cookies.get("role") == "admin"
+    if not is_admin:
+        raise HTTPException(status_code=403, detail="Only admins can backup")
+
+    try:
+        db_path = "section_cases.db"
+        backup_dir = Path("backups")
+        backup_dir.mkdir(exist_ok=True)
+
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        backup_file = backup_dir / f"section_cases_backup_{timestamp}.db"
+
+        shutil.copy2(db_path, backup_file)
+
+        return {"status": "success", "message": f"Database backed up to {backup_file}", "file": str(backup_file)}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Backup failed: {str(e)}")
+
+@app.get("/backup/download/{filename}")
+async def download_backup(filename: str, request: Request):
+    auth_check = check_auth(request)
+    if auth_check:
+        return auth_check
+
+    is_admin = request.cookies.get("role") == "admin"
+    if not is_admin:
+        raise HTTPException(status_code=403, detail="Only admins can download backups")
+
+    try:
+        file_path = Path("backups") / filename
+        if not file_path.exists():
+            raise HTTPException(status_code=404, detail="Backup file not found")
+
+        return FileResponse(file_path, filename=filename)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
