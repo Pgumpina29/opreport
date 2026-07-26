@@ -126,18 +126,18 @@ async def login_page():
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;}
-body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
-.login-box{background:rgba(45,45,45,.98); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); max-width:400px; width:95%; border:1px solid #444;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #3e2723 0%, #5d4037 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+.login-box{background:rgba(62,39,35,.98); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); max-width:400px; width:95%; border:1px solid #6d4c41;}
 h1{color:#e7b35a; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
 .creds{color:#a8a8a8; font-size:11px; margin:0 0 20px; padding:10px; background:#1a1a1a; border-radius:6px; border-left:3px solid #e7b35a;}
 .creds strong{color:#d4a574;}
 .form-group{margin-bottom:20px;}
 label{display:block; font-weight:600; color:#d4a574; margin-bottom:6px; font-size:13px;}
-input{width:100%; padding:10px 12px; border:2px solid #444; border-radius:6px; font-size:14px; font-family:inherit; background:#1a1a1a; color:#fff;}
+input{width:100%; padding:10px 12px; border:2px solid #6d4c41; border-radius:6px; font-size:14px; font-family:inherit; background:#2c1810; color:#fff;}
 input:focus{outline:none; border-color:#e7b35a; box-shadow:0 0 0 3px rgba(231,179,90,.1);}
 button{width:100%; padding:11px; background:#e7b35a; color:#1a1a1a; border:none; border-radius:6px; font-weight:700; font-size:15px; cursor:pointer; transition:.3s;}
 button:hover{background:#d4a574;}
-.error{color:#ff6b6b; font-size:13px; margin-top:15px; text-align:center; padding:10px; background:#3a1a1a; border-radius:6px; border:1px solid #8a3a3a;}
+.error{color:#ffab91; font-size:13px; margin-bottom:15px; text-align:center; padding:10px; background:#3e2723; border-radius:6px; border:1px solid #6d4c41;}
 .back{text-align:center; margin-top:15px;}
 .back a{color:#e7b35a; text-decoration:none; font-size:13px;}
 .back a:hover{text-decoration:underline;}
@@ -197,12 +197,12 @@ async def authenticate(username: str = Form(...), password: str = Form(...)):
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;}
-body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
-.login-box{background:rgba(45,45,45,.98); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); max-width:400px; width:95%; border:1px solid #444;}
+body{margin:0; padding:0; font-family:'Montserrat',sans-serif; background:linear-gradient(135deg, #3e2723 0%, #5d4037 100%); min-height:100vh; display:flex; align-items:center; justify-content:center;}
+.login-box{background:rgba(62,39,35,.98); padding:50px 40px; border-radius:12px; box-shadow:0 8px 40px rgba(0,0,0,.5); max-width:400px; width:95%; border:1px solid #6d4c41;}
 h1{color:#e7b35a; font-size:24px; margin:0 0 10px; font-weight:700; text-align:center;}
 .form-group{margin-bottom:20px;}
 label{display:block; font-weight:600; color:#d4a574; margin-bottom:6px; font-size:13px;}
-input{width:100%; padding:10px 12px; border:2px solid #444; border-radius:6px; font-size:14px; font-family:inherit; background:#1a1a1a; color:#fff;}
+input{width:100%; padding:10px 12px; border:2px solid #6d4c41; border-radius:6px; font-size:14px; font-family:inherit; background:#2c1810; color:#fff;}
 input:focus{outline:none; border-color:#e7b35a; box-shadow:0 0 0 3px rgba(231,179,90,.1);}
 button{width:100%; padding:11px; background:#e7b35a; color:#1a1a1a; border:none; border-radius:6px; font-weight:700; font-size:15px; cursor:pointer; transition:.3s;}
 button:hover{background:#d4a574;}
