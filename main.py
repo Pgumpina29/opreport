@@ -717,6 +717,8 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
     .fvalue{{ color:#000; font-size:9pt; }}
     .sig-block{{ border-top:1px solid #000; margin-top:16px; padding-top:8px; }}
     .sig-name{{ color:#000; margin-top:36px; }}
+    .print-footer{{ display:block !important; color:#000; border-top:1.5px solid #000; margin-top:20px; padding-top:10px; text-align:center; font-weight:bold; }}
+    .print-header{{ display:none; }}
 }}
 </style>
 </head>
@@ -851,10 +853,11 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 </div>
 </div>
 </div>"""
-        selected_div = user_division if not is_admin else (division or 'All Divisions')
-        html += f"""<div style="margin-top:30px; padding-top:20px; border-top:2px solid #5b3a29; text-align:center; font-weight:600; color:#5b3a29;">
-<p style="margin:10px 0;">CTLC-{selected_div}</p>
-<p style="margin:10px 0;">SRDEEP-{selected_div}</p>
+        selected_div = user_division if not is_admin else (division or '')
+        if selected_div:
+            html += f"""<div class="print-footer">
+<p style="margin:8px 0;">CTLC-{selected_div}</p>
+<p style="margin:8px 0;">SRDEEP-{selected_div}</p>
 </div>"""
         html += """</body></html>"""
         return html
