@@ -558,7 +558,16 @@ async def create_incident(
         """)
     except Exception as e:
         db.rollback()
-        raise HTTPException(status_code=400, detail=str(e))
+        print(f"ERROR SAVING INCIDENT: {str(e)}")
+        return HTMLResponse(f"""
+        <html><body style="font-family: Montserrat; margin: 20px;">
+            <div style="background:#fde8e8; color:#c0392b; padding:12px; border-radius:6px; border:1px solid #f5b3b3;">
+            <h2 style="margin:0 0 8px;">❌ Error saving incident!</h2>
+            <p style="margin:8px 0; color:#8b0000;"><strong>Error:</strong> {str(e)}</p>
+            <a href="/entry">← Back to form</a>
+            </div>
+        </body></html>
+        """, status_code=400)
     finally:
         db.close()
 
