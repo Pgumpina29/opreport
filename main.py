@@ -151,7 +151,7 @@ button:hover{background:#d4a574;}
 <circle cx="100" cy="100" r="78" fill="none" stroke="#d4a574" stroke-width="5"/>
 <circle cx="100" cy="100" r="62" fill="none" stroke="#a8a8a8" stroke-width="5"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1; filter:brightness(0) invert(1) brightness(1.2);" onerror="this.style.display='none'">
 </div>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
@@ -220,7 +220,7 @@ button:hover{background:#d4a574;}
 <circle cx="100" cy="100" r="78" fill="none" stroke="#d4a574" stroke-width="5"/>
 <circle cx="100" cy="100" r="62" fill="none" stroke="#a8a8a8" stroke-width="5"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1; filter:brightness(0) invert(1) brightness(1.2);" onerror="this.style.display='none'">
 </div>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
@@ -358,7 +358,7 @@ button:hover{background:var(--green-dark);}
 <label>Time of Incidence</label><input type="time" name="incident_time">
 <label>Division</label><select name="division" required><option value="">-- select --</option><option>Guntur</option><option>Guntakal</option><option>Vijayawada</option><option>Visakhapatnam</option></select>
 <label>Section</label><input name="section" type="text">
-<label>Major Section</label><select name="major_section"><option value="">-- select --</option><option>RV</option><option>PSA</option><option>COMPLEX</option></select>
+<label>Major Section</label><input name="major_section" type="text">
 <label>Minor Section</label><input name="minor_section" type="text">
 <label>Location (OHE Mast No)</label><input name="location" type="text">
 <label>Gradient</label><input name="gradient" type="text">
