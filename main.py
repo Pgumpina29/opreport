@@ -731,9 +731,9 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
     .fvalue{{ color:#000; font-size:9pt; }}
     .sig-block{{ border-top:1px solid #000; margin-top:16px; padding-top:8px; }}
     .sig-name{{ color:#000; margin-top:36px; }}
-    .print-footer{{ display:block !important; }}
-    .print-footer{{ color:#000; border-top:1.5px solid #000; margin-top:20px; padding-top:10px; text-align:center; font-weight:bold; display:none; }}
+    .print-footer{{ display:block !important; color:#000; border-top:1.5px solid #000; margin-top:20px; padding-top:10px; text-align:center; font-weight:bold; }}
     .print-header{{ display:none; }}
+    .empty{{ display:none; }}
 }}
 </style>
 </head>
