@@ -734,13 +734,13 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 </form>
 </div>
 
-<div class="division-tabs" style="display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;">
-<a href="/report" style="padding:8px 16px; border-radius:6px; background:{'' if not division else '#efe3cd'}; color:#5b3a29; text-decoration:none; font-weight:600;">All</a>
-<a href="/report?division=Visakhapatnam" style="padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Visakhapatnam' else '#efe3cd'}; color:{'#fff' if division == 'Visakhapatnam' else '#5b3a29'}; text-decoration:none; font-weight:600;">Visakhapatnam</a>
-<a href="/report?division=Guntakal" style="padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Guntakal' else '#efe3cd'}; color:{'#fff' if division == 'Guntakal' else '#5b3a29'}; text-decoration:none; font-weight:600;">Guntakal</a>
-<a href="/report?division=Vijayawada" style="padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Vijayawada' else '#efe3cd'}; color:{'#fff' if division == 'Vijayawada' else '#5b3a29'}; text-decoration:none; font-weight:600;">Vijayawada</a>
-<a href="/report?division=Guntur" style="padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Guntur' else '#efe3cd'}; color:{'#fff' if division == 'Guntur' else '#5b3a29'}; text-decoration:none; font-weight:600;">Guntur</a>
-</div>
+{"<div class='division-tabs' style='display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;'>" +
+"<a href='/report' style='padding:8px 16px; border-radius:6px; background:" + ("" if not division else "#efe3cd") + "; color:#5b3a29; text-decoration:none; font-weight:600;'>All</a>" +
+"<a href='/report?division=Visakhapatnam' style='padding:8px 16px; border-radius:6px; background:" + ("#5b3a29" if division == "Visakhapatnam" else "#efe3cd") + "; color:" + ("#fff" if division == "Visakhapatnam" else "#5b3a29") + "; text-decoration:none; font-weight:600;'>Visakhapatnam</a>" +
+"<a href='/report?division=Guntakal' style='padding:8px 16px; border-radius:6px; background:" + ("#5b3a29" if division == "Guntakal" else "#efe3cd") + "; color:" + ("#fff" if division == "Guntakal" else "#5b3a29") + "; text-decoration:none; font-weight:600;'>Guntakal</a>" +
+"<a href='/report?division=Vijayawada' style='padding:8px 16px; border-radius:6px; background:" + ("#5b3a29" if division == "Vijayawada" else "#efe3cd") + "; color:" + ("#fff" if division == "Vijayawada" else "#5b3a29") + "; text-decoration:none; font-weight:600;'>Vijayawada</a>" +
+"<a href='/report?division=Guntur' style='padding:8px 16px; border-radius:6px; background:" + ("#5b3a29" if division == "Guntur" else "#efe3cd") + "; color:" + ("#fff" if division == "Guntur" else "#5b3a29") + "; text-decoration:none; font-weight:600;'>Guntur</a>" +
+"</div>" if is_admin else "<p style='color:#6b5440; font-weight:600; margin-bottom:15px;'>Division: <b>" + user_division + "</b></p>"}
 
 <div class="tabs">
 <a href="/entry">New Entry</a>
@@ -848,6 +848,11 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 <div class="sig-col"><div class="sig-name">Sr.DEE(OP)/VSKP</div></div>
 </div>
 </div>
+</div>"""
+        selected_div = user_division if not is_admin else (division or 'All Divisions')
+        html += f"""<div style="margin-top:30px; padding-top:20px; border-top:2px solid #5b3a29; text-align:center; font-weight:600; color:#5b3a29;">
+<p style="margin:10px 0;">CTLC-{selected_div}</p>
+<p style="margin:10px 0;">SRDEEP-{selected_div}</p>
 </div>"""
         html += """</body></html>"""
         return html
