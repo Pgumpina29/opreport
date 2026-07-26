@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: opreport
+    runtime: python
+    pythonVersion: 3.11
+    startCommand: pip install -r requirements.txt && uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: DATABASE_URL
+        scope: run_and_build
+        sync: false
+    databases:
+      - name: section_cases
+        databaseName: section_cases
+        user: section_user
+        plan: free
