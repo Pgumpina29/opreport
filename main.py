@@ -130,17 +130,17 @@ h2{color:#ff9933; font-size:24px; margin:0 0 10px; font-weight:700;}
 <body>
 <div class="flag-banner">
 <div class="welcome-box">
-<svg width="160" height="160" viewBox="0 0 160 160" style="margin:0 auto 20px; display:block;">
+<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
+<svg width="160" height="160" viewBox="0 0 160 160" style="position:absolute;">
 <!-- Outer Saffron Ring -->
 <circle cx="80" cy="80" r="75" fill="none" stroke="#ff9933" stroke-width="12"/>
 <!-- Middle White Ring -->
 <circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="8"/>
 <!-- Inner Green Ring -->
 <circle cx="80" cy="80" r="48" fill="none" stroke="#138808" stroke-width="8"/>
-<!-- Center Blue Circle with Ashoka -->
-<circle cx="80" cy="80" r="40" fill="#1f41a0"/>
-<text x="80" y="95" font-size="50" text-anchor="middle" fill="#fff" font-family="Arial">🦁</text>
 </svg>
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1;" onerror="this.style.display='none'">
+</div>
 <h1>South Coast Railway</h1>
 <h2>USF-LOGS</h2>
 <p class="sub">Unified Safety Framework<br>Incident Logging System<br><strong>Satyameva Jayate</strong></p>
@@ -179,17 +179,17 @@ button:hover{background:#e68822;}
 </head>
 <body>
 <div class="login-box">
-<svg width="120" height="120" viewBox="0 0 160 160" style="margin:0 auto 20px; display:block;">
+<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
+<svg width="160" height="160" viewBox="0 0 160 160" style="position:absolute;">
 <!-- Outer Saffron Ring -->
 <circle cx="80" cy="80" r="75" fill="none" stroke="#ff9933" stroke-width="12"/>
 <!-- Middle White Ring -->
 <circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="8"/>
 <!-- Inner Green Ring -->
 <circle cx="80" cy="80" r="48" fill="none" stroke="#138808" stroke-width="8"/>
-<!-- Center Blue Circle with Ashoka -->
-<circle cx="80" cy="80" r="40" fill="#1f41a0"/>
-<text x="80" y="95" font-size="50" text-anchor="middle" fill="#fff" font-family="Arial">🦁</text>
 </svg>
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1;" onerror="this.style.display='none'">
+</div>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
 <div class="form-group">
@@ -241,17 +241,17 @@ button:hover{background:#e68822;}
 </head>
 <body>
 <div class="login-box">
-<svg width="120" height="120" viewBox="0 0 160 160" style="margin:0 auto 20px; display:block;">
+<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
+<svg width="160" height="160" viewBox="0 0 160 160" style="position:absolute;">
 <!-- Outer Saffron Ring -->
 <circle cx="80" cy="80" r="75" fill="none" stroke="#ff9933" stroke-width="12"/>
 <!-- Middle White Ring -->
 <circle cx="80" cy="80" r="60" fill="none" stroke="#fff" stroke-width="8"/>
 <!-- Inner Green Ring -->
 <circle cx="80" cy="80" r="48" fill="none" stroke="#138808" stroke-width="8"/>
-<!-- Center Blue Circle with Ashoka -->
-<circle cx="80" cy="80" r="40" fill="#1f41a0"/>
-<text x="80" y="95" font-size="50" text-anchor="middle" fill="#fff" font-family="Arial">🦁</text>
 </svg>
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1;" onerror="this.style.display='none'">
+</div>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
 <div class="error">❌ Invalid username or password. Try again.</div>
