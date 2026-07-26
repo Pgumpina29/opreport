@@ -184,21 +184,15 @@ button:hover{background:#d4a574;}
 </head>
 <body>
 <div class="login-box">
-<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center; padding:20px;">
-<svg width="160" height="160" viewBox="0 0 200 200" style="position:absolute;">
-<circle cx="100" cy="100" r="70" fill="none" stroke="#e7b35a" stroke-width="6"/>
-<circle cx="100" cy="100" r="55" fill="none" stroke="#d4a574" stroke-width="5"/>
-<circle cx="100" cy="100" r="42" fill="none" stroke="#a8a8a8" stroke-width="4"/>
+<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
+<svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
+<circle cx="100" cy="100" r="95" fill="none" stroke="#e7b35a" stroke-width="6"/>
+<circle cx="100" cy="100" r="78" fill="none" stroke="#d4a574" stroke-width="5"/>
+<circle cx="100" cy="100" r="62" fill="none" stroke="#a8a8a8" stroke-width="5"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:80px; height:80px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
 </div>
 <h1>USF-LOGS Login</h1>
-<div class="creds">
-<strong>Demo Credentials:</strong><br>
-Admin: <strong>admin</strong> / <strong>admin@123</strong><br>
-User: <strong>guntur</strong> / <strong>guntur123</strong><br>
-(also: guntakal, vijayawada, visakhapatnam + same pattern)
-</div>
 <form method="POST" action="/auth">
 <div class="form-group">
 <label>Username</label>
@@ -259,13 +253,13 @@ button:hover{background:#d4a574;}
 </head>
 <body>
 <div class="login-box">
-<div style="width:160px; height:160px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center; padding:20px;">
-<svg width="160" height="160" viewBox="0 0 200 200" style="position:absolute;">
-<circle cx="100" cy="100" r="70" fill="none" stroke="#e7b35a" stroke-width="6"/>
-<circle cx="100" cy="100" r="55" fill="none" stroke="#d4a574" stroke-width="5"/>
-<circle cx="100" cy="100" r="42" fill="none" stroke="#a8a8a8" stroke-width="4"/>
+<div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
+<svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
+<circle cx="100" cy="100" r="95" fill="none" stroke="#e7b35a" stroke-width="6"/>
+<circle cx="100" cy="100" r="78" fill="none" stroke="#d4a574" stroke-width="5"/>
+<circle cx="100" cy="100" r="62" fill="none" stroke="#a8a8a8" stroke-width="5"/>
 </svg>
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:80px; height:80px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1; filter:brightness(0.9);" onerror="this.style.display='none'">
 </div>
 <h1>USF-LOGS Login</h1>
 <form method="POST" action="/auth">
