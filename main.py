@@ -558,6 +558,7 @@ async def create_incident(
         )
         db.add(incident)
         db.commit()
+        print(f"✓ SAVED: Incident ID={incident.id}, Division={incident.division}, Train={incident.train_no}")
         return HTMLResponse("""
         <html><body style="font-family: Montserrat; margin: 20px;">
             <div style="background:#e8f6ec; color:#0f6b34; padding:12px; border-radius:6px; border:1px solid #a8d5b8;">
@@ -932,6 +933,17 @@ async def export_excel(request: Request, division: Optional[str] = None):
         )
     finally:
         db.close()
+
+@app.get("/debug-db")
+async def debug_db():
+    return HTMLResponse(f"""
+    <html><body style="font-family: Montserrat; margin: 20px;">
+    <h1>Database Configuration</h1>
+    <p><strong>DATABASE_URL:</strong> {DATABASE_URL[:50]}...</p>
+    <p><strong>Using:</strong> {'PostgreSQL' if 'postgres' in DATABASE_URL else 'SQLite'}</p>
+    <p><a href="/debug-data">View All Records →</a></p>
+    </body></html>
+    """)
 
 @app.get("/debug-data")
 async def debug_data():
