@@ -727,8 +727,11 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
     .print-header{{ display:none !important; }}
     .empty{{ display:none !important; }}
 
-    .report-block{{ display:block !important; border:1px solid #444; border-radius:0; box-shadow:none; padding:10px; margin:10mm; page-break-inside:avoid; page-break-after:always; }}
-    .report-block *{{ display:inherit !important; visibility:visible !important; }}
+    .report-block{{ display:block !important; border:1px solid #444; border-radius:0; box-shadow:none; padding:10px; margin:10mm; page-break-inside:avoid; page-break-after:always; visibility:visible !important; background:#fff !important; }}
+    .report-block div{{ display:block !important; visibility:visible !important; }}
+    .report-block span{{ display:inline-block !important; visibility:visible !important; }}
+    .report-block h2{{ display:block !important; visibility:visible !important; }}
+    .report-block p{{ display:block !important; visibility:visible !important; }}
 
     .rpt-org{{ display:block !important; color:#000 !important; border-bottom:2px solid #000 !important; padding-bottom:6px !important; margin-bottom:8px !important; font-size:10pt !important; }}
     .rpt-org span{{ display:inline-block !important; margin-right:30px !important; }}
