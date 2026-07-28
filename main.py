@@ -933,6 +933,29 @@ async def export_excel(request: Request, division: Optional[str] = None):
     finally:
         db.close()
 
+@app.get("/debug-data")
+async def debug_data():
+    db = SessionLocal()
+    try:
+        all_records = db.query(SectionCase).all()
+        html = f"""
+        <html><body style="font-family: Montserrat; margin: 20px;">
+        <h1>Database Debug Info</h1>
+        <p><strong>Total Records:</strong> {len(all_records)}</p>
+        """
+        if all_records:
+            html += "<table border='1' style='border-collapse:collapse; padding:10px;'>"
+            html += "<tr><th>ID</th><th>Date</th><th>Division</th><th>Train</th><th>Incident Type</th></tr>"
+            for record in all_records:
+                html += f"<tr><td>{record.id}</td><td>{record.date}</td><td>{record.division}</td><td>{record.train_no}</td><td>{record.incident_type}</td></tr>"
+            html += "</table>"
+        else:
+            html += "<p style='color:red;'><strong>⚠️ NO DATA IN DATABASE!</strong></p>"
+        html += "</body></html>"
+        return HTMLResponse(html)
+    finally:
+        db.close()
+
 @app.get("/edit/{record_id}")
 async def edit_record_page(record_id: int):
     db = SessionLocal()
