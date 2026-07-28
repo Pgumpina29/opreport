@@ -1,5 +1,5 @@
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI, Form
+from fastapi.responses import HTMLResponse, RedirectResponse
 
 app = FastAPI(title="Section Incident Report")
 
@@ -19,12 +19,29 @@ def login():
     <p>Test: admin / admin@123</p>
     </body></html>"""
 
-@app.post("/auth")
-def auth(username: str, password: str):
+@app.post("/auth", response_class=HTMLResponse)
+def auth(username: str = Form(...), password: str = Form(...)):
     if username == "admin" and password == "admin@123":
-        return "<h1>Login Success!</h1><a href='/entry'>Go to Entry</a>"
-    return "<h1>Login Failed!</h1>"
+        return "<h1>✅ Login Success!</h1><a href='/entry'>Go to Entry</a>"
+    return "<h1>❌ Login Failed!</h1><a href='/login'>Try Again</a>"
 
 @app.get("/entry", response_class=HTMLResponse)
 def entry():
-    return "<h1>✅ Entry Form - App Working!</h1>"
+    return """<html><body style="padding:50px;">
+    <h1>✅ Entry Form - App Working!</h1>
+    <p>Full incident form coming soon...</p>
+    <form method="POST" action="/save">
+        <input type="text" name="train_no" placeholder="Train Number" required><br><br>
+        <input type="date" name="date" required><br><br>
+        <button type="submit">Save Incident</button>
+    </form>
+    <a href="/report">View Report</a>
+    </body></html>"""
+
+@app.post("/save", response_class=HTMLResponse)
+def save(train_no: str = Form(...), date: str = Form(...)):
+    return f"<h1>✅ Saved!</h1><p>Train: {train_no}</p><p>Date: {date}</p><a href='/entry'>Back</a>"
+
+@app.get("/report", response_class=HTMLResponse)
+def report():
+    return "<h1>📊 Report Page</h1><p>Reports coming soon...</p><a href='/entry'>Back</a>"
