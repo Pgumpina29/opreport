@@ -719,8 +719,7 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 .sig-name{{ font-size:10pt; font-weight:600; color:#5b3a29; margin-top:40px; }}
 @page{{ margin:0; }}
 @media print{{
-    html,body{{ margin:0; padding:0; background:#fff; color:#000; }}
-    * {{ visibility:visible !important; display:initial !important; }}
+    html,body{{ margin:0; padding:0; background:#fff !important; color:#000 !important; }}
     .controls{{ display:none !important; }}
     .tabs{{ display:none !important; }}
     .division-tabs{{ display:none !important; }}
@@ -728,22 +727,29 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
     .print-header{{ display:none !important; }}
     .empty{{ display:none !important; }}
 
-    .report-block{{ display:block !important; visibility:visible !important; border:1px solid #444; border-radius:0; box-shadow:none; padding:6px 8px; margin:6mm; page-break-inside:avoid; }}
-    .rpt-org{{ display:block !important; visibility:visible !important; color:#000; border-bottom:1px solid #000; padding-bottom:4px; margin-bottom:6px; }}
-    .rpt-org b{{ color:#000; font-weight:bold; visibility:visible !important; display:inline !important; }}
-    .rpt-org span{{ display:inline !important; visibility:visible !important; }}
-    .block-head{{ display:block !important; visibility:visible !important; border-bottom:1.5px solid #000; margin-bottom:6px; padding-bottom:4px; }}
-    .block-head span{{ display:inline !important; visibility:visible !important; margin-right:20px; }}
-    h2{{ display:block !important; visibility:visible !important; color:#000; border-bottom:1px solid #000; font-size:9pt; margin:8px 0 4px 0; padding-bottom:2px; }}
-    .grid{{ display:block !important; visibility:visible !important; margin-bottom:6px; }}
-    .field{{ display:block !important; visibility:visible !important; margin-bottom:4px; padding:2px 0; }}
-    .field.wide{{ display:block !important; visibility:visible !important; width:100%; }}
-    .flabel{{ display:block !important; visibility:visible !important; color:#000; font-weight:bold; font-size:8pt; }}
-    .fvalue{{ display:block !important; visibility:visible !important; color:#000; font-size:9pt; margin-bottom:2px; }}
-    .sig-block{{ display:block !important; visibility:visible !important; border-top:1px solid #000; margin-top:16px; padding-top:8px; }}
-    .sig-line{{ display:flex !important; visibility:visible !important; }}
-    .sig-col{{ display:block !important; visibility:visible !important; flex:1; text-align:center; }}
-    .sig-name{{ display:block !important; visibility:visible !important; color:#000; margin-top:36px; }}
+    .report-block{{ display:block !important; border:1px solid #444; border-radius:0; box-shadow:none; padding:10px; margin:10mm; page-break-inside:avoid; page-break-after:always; }}
+    .report-block *{{ display:inherit !important; visibility:visible !important; }}
+
+    .rpt-org{{ display:block !important; color:#000 !important; border-bottom:2px solid #000 !important; padding-bottom:6px !important; margin-bottom:8px !important; font-size:10pt !important; }}
+    .rpt-org span{{ display:inline-block !important; margin-right:30px !important; }}
+    .rpt-org b{{ font-weight:bold !important; }}
+
+    .block-head{{ display:block !important; border-bottom:2px solid #000 !important; margin-bottom:8px !important; padding-bottom:6px !important; font-weight:bold !important; }}
+    .block-head span{{ display:inline-block !important; margin-right:20px !important; font-size:10pt !important; }}
+
+    h2{{ display:block !important; color:#000 !important; border-bottom:1.5px solid #000 !important; font-size:10pt !important; margin:10px 0 6px 0 !important; padding-bottom:4px !important; font-weight:bold !important; }}
+
+    .grid{{ display:block !important; margin-bottom:8px !important; }}
+    .field{{ display:block !important; margin-bottom:6px !important; padding:4px 0 !important; page-break-inside:avoid !important; }}
+    .field.wide{{ display:block !important; width:100% !important; }}
+
+    .flabel{{ display:block !important; color:#000 !important; font-weight:bold !important; font-size:8pt !important; margin-bottom:2px !important; }}
+    .fvalue{{ display:block !important; color:#000 !important; font-size:10pt !important; padding:2px 0 !important; }}
+
+    .sig-block{{ display:block !important; border-top:1.5px solid #000 !important; margin-top:20px !important; padding-top:12px !important; }}
+    .sig-line{{ display:flex !important; justify-content:space-between !important; }}
+    .sig-col{{ display:block !important; flex:1 !important; text-align:center !important; }}
+    .sig-name{{ display:block !important; color:#000 !important; font-weight:bold !important; margin-top:40px !important; }}
 }}
 </style>
 </head>
