@@ -872,23 +872,9 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 <div class="field wide"><div class="flabel">Shed Investigation Finding</div><div class="fvalue">{(row.shed_investigation or '-') if row.shed_investigation else '-'}</div></div>
 </div>
 <div class="sig-block">
-<div class="sig-line">
-<div class="sig-col"><div class="sig-name">CTLC/{hv(div_name)}</div></div>
-<div class="sig-col"><div class="sig-name">SRDEEP/{hv(div_name)}</div></div>
-</div>
 </div>
 </div>"""
         # Show division codes in footer
-        if not is_admin and user_division:
-            html += f"""<div class="print-footer">
-<p style="margin:8px 0;">CTLC-{user_division}</p>
-<p style="margin:8px 0;">SRDEEP-{user_division}</p>
-</div>"""
-        elif is_admin and division:
-            html += f"""<div class="print-footer">
-<p style="margin:8px 0;">CTLC-{division}</p>
-<p style="margin:8px 0;">SRDEEP-{division}</p>
-</div>"""
         html += """</body></html>"""
         return html
     finally:
