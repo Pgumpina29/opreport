@@ -4,7 +4,7 @@ import csv
 from io import StringIO
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text
+from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from datetime import datetime
@@ -670,8 +670,8 @@ async def get_report(request: Request, from_date: Optional[str] = None, to_date:
         records = []
         query = db.query(SectionCase)
 
-        # Filter by Visakhapatnam division only
-        query = query.filter(SectionCase.division == "Visakhapatnam")
+        # Filter by Visakhapatnam division only (case-insensitive)
+        query = query.filter(func.lower(SectionCase.division) == "visakhapatnam")
 
         # Filter by date range if provided
         if from_date and to_date:
