@@ -181,13 +181,7 @@ button:hover{background:#d4a574;}
 async def authenticate(username: str = Form(...), password: str = Form(...)):
     # Credentials mapping: username -> (password, division)
     credentials = {
-        "guntur": ("guntur123", "Guntur"),
-        "guntakal": ("guntakal123", "Guntakal"),
-        "vijayawada": ("vijayawada123", "Vijayawada"),
         "visakhapatnam": ("visakhapatnam123", "Visakhapatnam"),
-        "gnt": ("gnt123", "Guntur"),
-        "gtl": ("gtl123", "Guntakal"),
-        "bza": ("bza123", "Vijayawada"),
         "vskp": ("vskp123", "Visakhapatnam")
     }
 
@@ -372,7 +366,7 @@ button:hover{background:var(--green-dark);}
 <label>S.No</label><input name="sno" type="text">
 <label>Date of Incidence</label><input type="date" name="date" required>
 <label>Time of Incidence</label><input type="time" name="incident_time">
-<label>Division</label><select name="division" required><option value="">-- select --</option><option>Guntur</option><option>Guntakal</option><option>Vijayawada</option><option>Visakhapatnam</option></select>
+<input type="hidden" name="division" value="Visakhapatnam">
 <label>Section</label><input name="section" type="text">
 <label>Major Section</label><input name="major_section" type="text">
 <label>Minor Section</label><input name="minor_section" type="text">
@@ -680,11 +674,8 @@ async def get_report(request: Request, from_date: Optional[str] = None, to_date:
         if from_date and to_date:
             query = query.filter(SectionCase.date.between(from_date, to_date))
 
-        # Filter by division
-        if division and is_admin:
-            query = query.filter(SectionCase.division == division)
-        elif not is_admin:
-            query = query.filter(SectionCase.division == user_division)
+        # Filter by Visakhapatnam division only
+        query = query.filter(SectionCase.division == "Visakhapatnam")
 
         records = query.order_by(SectionCase.date.desc()).all()
 
@@ -764,7 +755,7 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 </form>
 </div>
 
-{f"<div class='division-tabs' style='display:flex; gap:8px; margin-bottom:15px; flex-wrap:wrap;'><a href='/report' style='padding:8px 16px; border-radius:6px; background:{'' if not division else '#efe3cd'}; color:#5b3a29; text-decoration:none; font-weight:600;'>All</a><a href='/report?division=Visakhapatnam' style='padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Visakhapatnam' else '#efe3cd'}; color:{'#fff' if division == 'Visakhapatnam' else '#5b3a29'}; text-decoration:none; font-weight:600;'>Visakhapatnam</a><a href='/report?division=Guntakal' style='padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Guntakal' else '#efe3cd'}; color:{'#fff' if division == 'Guntakal' else '#5b3a29'}; text-decoration:none; font-weight:600;'>Guntakal</a><a href='/report?division=Vijayawada' style='padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Vijayawada' else '#efe3cd'}; color:{'#fff' if division == 'Vijayawada' else '#5b3a29'}; text-decoration:none; font-weight:600;'>Vijayawada</a><a href='/report?division=Guntur' style='padding:8px 16px; border-radius:6px; background:{'#5b3a29' if division == 'Guntur' else '#efe3cd'}; color:{'#fff' if division == 'Guntur' else '#5b3a29'}; text-decoration:none; font-weight:600;'>Guntur</a></div>" if is_admin else f"<p style='color:#6b5440; font-weight:600; margin-bottom:15px;'>Division: <b>{user_division}</b></p>"}
+<p style='color:#6b5440; font-weight:600; margin-bottom:15px;'>Division: <b>Visakhapatnam</b></p>
 
 <div class="tabs">
 <a href="/entry">New Entry</a>
