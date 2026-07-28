@@ -95,6 +95,16 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Section Incident Report", version="1.0.2")
 
+@app.on_event("startup")
+async def startup_event():
+    try:
+        Base.metadata.create_all(bind=engine)
+        db = SessionLocal()
+        db.close()
+        print(f"✓ Database initialized. Using: {'PostgreSQL' if 'postgres' in DATABASE_URL else 'SQLite'}")
+    except Exception as e:
+        print(f"⚠️ Database init warning: {e}")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
