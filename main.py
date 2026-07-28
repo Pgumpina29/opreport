@@ -670,12 +670,12 @@ async def get_report(request: Request, from_date: Optional[str] = None, to_date:
         records = []
         query = db.query(SectionCase)
 
+        # Filter by Visakhapatnam division only
+        query = query.filter(SectionCase.division == "Visakhapatnam")
+
         # Filter by date range if provided
         if from_date and to_date:
             query = query.filter(SectionCase.date.between(from_date, to_date))
-
-        # Filter by Visakhapatnam division only
-        query = query.filter(SectionCase.division == "Visakhapatnam")
 
         records = query.order_by(SectionCase.date.desc()).all()
 
@@ -764,9 +764,7 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 <a href="/logout" style="margin-left:auto; background:#c0392b; color:#fff;">Logout</a>
 </div>
 """
-        if not from_date or not to_date:
-            html += '<p class="empty" style="color:#c0392b; font-weight:600; padding:20px; background:#ffe8e8; border-radius:6px;">⚠️ Please select a date range and click Filter to view reports.</p>'
-        elif not records:
+        if not records:
             html += f'<p class="empty">No records for the selected date range.</p>'
         else:
             for row in records:
