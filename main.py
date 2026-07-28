@@ -152,9 +152,9 @@ button:hover{background:#d4a574;}
 <div class="login-box">
 <div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
 <svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
-<circle cx="100" cy="100" r="95" fill="none" stroke="#e7b35a" stroke-width="6"/>
-<circle cx="100" cy="100" r="78" fill="none" stroke="#d4a574" stroke-width="5"/>
-<circle cx="100" cy="100" r="62" fill="none" stroke="#a8a8a8" stroke-width="5"/>
+<circle cx="100" cy="100" r="95" fill="none" stroke="#FF9933" stroke-width="6"/>
+<circle cx="100" cy="100" r="78" fill="none" stroke="#FFFFFF" stroke-width="5"/>
+<circle cx="100" cy="100" r="62" fill="none" stroke="#138808" stroke-width="5"/>
 </svg>
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1; filter:brightness(0) invert(1) brightness(1.2);" onerror="this.style.display='none'">
 </div>
@@ -226,9 +226,9 @@ button:hover{background:#d4a574;}
 <div class="login-box">
 <div style="width:200px; height:200px; margin:0 auto 20px; position:relative; display:flex; align-items:center; justify-content:center;">
 <svg width="200" height="200" viewBox="0 0 200 200" style="position:absolute;">
-<circle cx="100" cy="100" r="95" fill="none" stroke="#e7b35a" stroke-width="6"/>
-<circle cx="100" cy="100" r="78" fill="none" stroke="#d4a574" stroke-width="5"/>
-<circle cx="100" cy="100" r="62" fill="none" stroke="#a8a8a8" stroke-width="5"/>
+<circle cx="100" cy="100" r="95" fill="none" stroke="#FF9933" stroke-width="6"/>
+<circle cx="100" cy="100" r="78" fill="none" stroke="#FFFFFF" stroke-width="5"/>
+<circle cx="100" cy="100" r="62" fill="none" stroke="#138808" stroke-width="5"/>
 </svg>
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Ashoka Emblem" style="width:90px; height:90px; position:relative; z-index:1; filter:brightness(0) invert(1) brightness(1.2);" onerror="this.style.display='none'">
 </div>
