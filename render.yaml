@@ -5,10 +5,7 @@ services:
     pythonVersion: 3.11.11
     buildCommand: pip install --no-cache-dir -r requirements.txt
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
-    envVars:
-      - key: DATABASE_URL
-        scope: run_and_build
-        sync: false
+    envVars: []
     databases:
       - name: section_cases
         databaseName: section_cases
