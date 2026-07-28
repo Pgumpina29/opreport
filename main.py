@@ -719,40 +719,39 @@ h2{{ font-size:9pt; color:#5b3a29; border-bottom:1px solid #e0cfa8; margin:12px 
 .sig-name{{ font-size:10pt; font-weight:600; color:#5b3a29; margin-top:40px; }}
 @page{{ margin:0; }}
 @media print{{
-    html,body{{ margin:0; padding:0; background:#fff !important; color:#000 !important; }}
-    .controls{{ display:none !important; }}
+    * {{ visibility:visible !important; opacity:1 !important; }}
+    html,body{{ margin:0; padding:0; background:#fff !important; color:#000 !important; width:100% !important; height:auto !important; }}
+
+    .controls,form,button,input,textarea,select{{ display:none !important; }}
     .tabs{{ display:none !important; }}
     .division-tabs{{ display:none !important; }}
     h1,.sub{{ display:none !important; }}
     .print-header{{ display:none !important; }}
     .empty{{ display:none !important; }}
+    nav{{ display:none !important; }}
 
-    .report-block{{ display:block !important; border:1px solid #444; border-radius:0; box-shadow:none; padding:10px; margin:10mm; page-break-inside:avoid; page-break-after:always; visibility:visible !important; background:#fff !important; }}
-    .report-block div{{ display:block !important; visibility:visible !important; }}
-    .report-block span{{ display:inline-block !important; visibility:visible !important; }}
-    .report-block h2{{ display:block !important; visibility:visible !important; }}
-    .report-block p{{ display:block !important; visibility:visible !important; }}
+    .report-block{{ display:block !important; page-break-after:always !important; page-break-inside:avoid !important; border:none; margin:0; padding:10px; background:#fff !important; color:#000 !important; }}
 
-    .rpt-org{{ display:block !important; color:#000 !important; border-bottom:2px solid #000 !important; padding-bottom:6px !important; margin-bottom:8px !important; font-size:10pt !important; }}
-    .rpt-org span{{ display:inline-block !important; margin-right:30px !important; }}
+    .rpt-org{{ display:block !important; margin:0 0 10px 0 !important; padding:0 0 8px 0 !important; border-bottom:2px solid #000 !important; }}
+    .rpt-org span{{ display:inline !important; margin-right:20px !important; }}
     .rpt-org b{{ font-weight:bold !important; }}
 
-    .block-head{{ display:block !important; border-bottom:2px solid #000 !important; margin-bottom:8px !important; padding-bottom:6px !important; font-weight:bold !important; }}
-    .block-head span{{ display:inline-block !important; margin-right:20px !important; font-size:10pt !important; }}
+    .block-head{{ display:block !important; margin:0 0 8px 0 !important; padding:0 0 6px 0 !important; border-bottom:2px solid #000 !important; font-weight:bold !important; }}
+    .block-head span{{ display:inline !important; margin-right:15px !important; }}
 
-    h2{{ display:block !important; color:#000 !important; border-bottom:1.5px solid #000 !important; font-size:10pt !important; margin:10px 0 6px 0 !important; padding-bottom:4px !important; font-weight:bold !important; }}
+    h2{{ display:block !important; margin:10px 0 6px 0 !important; padding:0 0 4px 0 !important; border-bottom:1px solid #000 !important; font-weight:bold !important; font-size:11pt !important; color:#000 !important; }}
 
-    .grid{{ display:block !important; margin-bottom:8px !important; }}
-    .field{{ display:block !important; margin-bottom:6px !important; padding:4px 0 !important; page-break-inside:avoid !important; }}
+    .grid{{ display:block !important; margin:0 0 8px 0 !important; }}
+    .field{{ display:block !important; margin:0 0 6px 0 !important; padding:0 !important; }}
     .field.wide{{ display:block !important; width:100% !important; }}
 
-    .flabel{{ display:block !important; color:#000 !important; font-weight:bold !important; font-size:8pt !important; margin-bottom:2px !important; }}
-    .fvalue{{ display:block !important; color:#000 !important; font-size:10pt !important; padding:2px 0 !important; }}
+    .flabel{{ display:block !important; font-weight:bold !important; font-size:8pt !important; margin:3px 0 1px 0 !important; color:#000 !important; }}
+    .fvalue{{ display:block !important; font-size:9pt !important; margin:0 0 4px 0 !important; color:#000 !important; }}
 
-    .sig-block{{ display:block !important; border-top:1.5px solid #000 !important; margin-top:20px !important; padding-top:12px !important; }}
-    .sig-line{{ display:flex !important; justify-content:space-between !important; }}
-    .sig-col{{ display:block !important; flex:1 !important; text-align:center !important; }}
-    .sig-name{{ display:block !important; color:#000 !important; font-weight:bold !important; margin-top:40px !important; }}
+    .sig-block{{ display:block !important; border-top:2px solid #000 !important; margin:20px 0 0 0 !important; padding:12px 0 0 0 !important; }}
+    .sig-line{{ display:block !important; }}
+    .sig-col{{ display:inline-block !important; width:30% !important; text-align:center !important; }}
+    .sig-name{{ display:block !important; margin:30px 0 0 0 !important; font-weight:bold !important; font-size:9pt !important; }}
 }}
 </style>
 </head>
