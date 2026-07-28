@@ -93,7 +93,7 @@ class SectionCase(Base):
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Section Incident Report", version="1.0.0")
+app = FastAPI(title="Section Incident Report", version="1.0.1")
 
 app.add_middleware(
     CORSMiddleware,
